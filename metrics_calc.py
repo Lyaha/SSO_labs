@@ -3,8 +3,9 @@ from radon.complexity import cc_visit
 from radon.raw import analyze
 from radon.metrics import mi_visit
 
+
 def calculate_metrics(file_path):
-    with open(file_path, 'r', encoding='utf-8') as f:
+    with open(file_path, "r", encoding="utf-8") as f:
         code = f.read()
 
     # McCabe
@@ -28,7 +29,8 @@ def calculate_metrics(file_path):
     print(f"Maintenance Index: {mi:.2f}")
     print(f"Гібридна метрика Кокола: {H_M:.2f}")
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     if len(sys.argv) < 2:
         print("Приклад: python metrics_calc.py task_manager.py")
     else:

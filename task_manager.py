@@ -4,6 +4,7 @@ from reminder import send_reminder
 
 TASK_FILE = "tasks.json"
 
+
 # Функція для завантаження задач з файлу
 def load_tasks():
     try:
@@ -12,10 +13,12 @@ def load_tasks():
     except FileNotFoundError:
         return []
 
+
 # Функція для збереження задач у файл
 def save_tasks(tasks):
     with open(TASK_FILE, "w") as file:
         json.dump(tasks, file, indent=2)
+
 
 # Функція для додавання задачі
 def add_task():
@@ -28,6 +31,7 @@ def add_task():
     print(f"Задача додана з пріоритетом: {priority}")
     send_reminder(text)
 
+
 # Функція для виведення списку задач
 def list_tasks():
     tasks = load_tasks()
@@ -35,6 +39,7 @@ def list_tasks():
         print("Список задач порожній.")
     for i, task in enumerate(tasks, 1):
         print(f"{i}. {task['text']} [Пріоритет: {task['priority']}]")
+
 
 # Функція для видалення задачі
 def remove_task():
@@ -48,8 +53,16 @@ def remove_task():
     else:
         print("Невірний номер задачі.")
 
+
 # Головна функція для управління меню
 def main():
+    menu_actions = {
+        "1": add_task,
+        "2": list_tasks,
+        "3": remove_task,
+        "4": lambda: None,  # Заглушка для обработки выхода
+    }
+
     while True:
         print("\nМеню:")
         print("1. Додати задачу")
@@ -57,16 +70,15 @@ def main():
         print("3. Видалити задачу")
         print("4. Вийти")
         choice = input("Виберіть опцію: ")
-        if choice == "1":
-            add_task()
-        elif choice == "2":
-            list_tasks()
-        elif choice == "3":
-            remove_task()
-        elif choice == "4":
+
+        if choice == "4":
             break
+        action = menu_actions.get(choice)
+        if action:
+            action()
         else:
             print("Невірний вибір!")
+
 
 if __name__ == "__main__":
     main()
